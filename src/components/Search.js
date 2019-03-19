@@ -18,10 +18,9 @@ const pokeImg = {
 
 const column = {
     float: 'left',
-    width: '25%',
-    padding: '15%',
+    width: '30%',
+    padding: '2%',
     wordWrap: 'breakWord',
-    color: 'white'
 };
 
 const container = {
