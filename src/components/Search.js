@@ -1,7 +1,12 @@
 import React, { Component, Fragment } from 'react';
 import superagent from 'superagent';
+import { withStyles } from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button'
+
 
 const pokeAPI = 'https://pokeapi.co/api/v2/pokemon/';
+
+// restyle using material ui
 
 const center = {
     paddingLeft: '40%',
@@ -9,22 +14,19 @@ const center = {
 
 const pokeImg = {
     width: '40%',
-    paddingRight: '30%'
 };
 
 const column = {
     float: 'left',
     width: '25%',
-    borderStyle: 'solid',
-    borderColor: 'black',
-    padding: '3%',
+    padding: '15%',
+    wordWrap: 'breakWord',
+    color: 'white'
 };
 
 const container = {
-    padding: '10%',
-    paddingLeft: '12%'
+    paddingLeft: '30%'
 };
-
 
 class Search extends Component {
     state = {
@@ -53,10 +55,10 @@ class Search extends Component {
                             results: sprite,
                         });
                     }).then(() => {
-                        fetch(response.body.moves)
+                        fetch(response.body.stats)
                             .then(() => {
                                 this.setState({
-                                    movesList: response.body.moves
+                                    movesList: response.body.stats
                                 });
                             });
                     }).then(() => {
@@ -82,60 +84,48 @@ class Search extends Component {
             });
     };
 
-
     render() {
 
         return (
             <Fragment>
-            <div style={center}>
-                <h1>Pokemon Search</h1>
+                <div style={center}>
+                    <h2>Pokemon Search</h2>
 
-                <form>
-                    <img style={pokeImg} src={this.state.results.url}></img>
-                    <br/>
-                    <input placeholder='Search...'
-                    ref={input => this.search = input}
-                    onChange={this.handleInputChange}
-                    />
-                    < br/>
-                    <button onClick={this.queryAPI}>Search</button>
-                    {this.state.errorMessage && <p>Pokemon not found! (Check spelling)</p>}
-                </form> 
+                    <form>
+                        <img style={pokeImg} src={this.state.results.url}></img>
+                        <br/>
+                        <input placeholder='Search...'
+                        ref={input => this.search = input}
+                        onChange={this.handleInputChange}
+                        />
+                        < br/>
+                        <Button variant='contained' color='primary' onClick={this.queryAPI}>Search</Button>
+                        {this.state.errorMessage && <p>Pokemon not found! (Check spelling)</p>}
+                    </form> 
 
-            </div>
-
-                <div style={container}>
-                    <div style={column}>  
-                    <h3>Moves List</h3>         
-                        <ul>
-                            {this.state.movesList.map((moves, i) => {
-                                return <li key={i}>Name: {moves.move.name}  </li>
-                            })}
-                        </ul>
-                    </div>
-
-                    <div style={column}>
-                    <h3>Pokemon Type</h3>
-                        <ul>
-                            {this.state.types.map((types, i) => {
-                                return <li key={i}>Type: {types.type.name}</li>
-                            })}
-                        </ul>
-                    </div>
-
-                    <div style={column}>
-                    <h3>Stats</h3>
-                        <ul>
-                            {this.state.statType.map((statType, i) => {
-                                return <li key={i}>Stat: {statType.stat.name} <br/> Base: {statType.base_stat}</li>
-                            })}
-                        </ul>
-                    </div>
                 </div>
-                
+                    <div style={container}> 
+                        <div style={column}>
+                        <h2>Pokemon Type</h2>
+                            <ul>
+                                {this.state.types.map((types, i) => {
+                                    return <li key={i}>Type: {types.type.name}</li>
+                                })}
+                            </ul>
+                        </div>
+
+                        <div style={column}>
+                        <h2>Pokemon Stats</h2>
+                            <ul>
+                                {this.state.statType.map((statType, i) => {
+                                    return <li key={i}>Stat: {statType.stat.name} <br/> Base Value: {statType.base_stat}</li>
+                                })}
+                            </ul>
+                        </div>
+                    </div>
             </Fragment>
         );
     };
 };
 
-export default Search;
+export default (Search);
