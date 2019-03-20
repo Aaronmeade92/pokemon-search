@@ -1,6 +1,6 @@
 import React, { Fragment, Component } from 'react';
 import { BrowserRouter, Route } from 'react-router-dom';
-import { connect, Provider } from 'react-redux';
+import { Provider } from 'react-redux';
 
 import store from './store/store.js';
 
