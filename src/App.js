@@ -4,7 +4,7 @@ import { Provider } from 'react-redux';
 
 import store from './store/store.js';
 
-import Dashboard from './components/Dashboard.js';
+import Dashboard from './components/dashboard.js';
 import ExpansionPanel from './components/ExpansionPanel.js';
 import './App.css';
 
