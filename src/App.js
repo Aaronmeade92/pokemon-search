@@ -5,7 +5,6 @@ import { Provider } from 'react-redux';
 import store from './store/store.js';
 
 import Dashboard from './components/dashboard.js';
-import ExpansionPanel from './components/ExpansionPanel.js';
 import './App.css';
 
 class App extends Component {
@@ -15,7 +14,6 @@ class App extends Component {
         <BrowserRouter>
           <Fragment>
             <Route exact path='/' component={Dashboard}/>
-            <Route exact path='/panel' component={ExpansionPanel}/>
           </Fragment>
         </BrowserRouter>
       </Provider>

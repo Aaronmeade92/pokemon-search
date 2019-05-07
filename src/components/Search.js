@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import superagent from 'superagent';
 import Button from '@material-ui/core/Button'
-
+import { Animated } from 'react-animated-css';
 
 const pokeAPI = 'https://pokeapi.co/api/v2/pokemon/';
 
@@ -25,6 +25,10 @@ const column = {
 const container = {
     paddingLeft: '30%'
 };
+
+const textStyle = {
+    fontWeight: 'bold',
+}
 
 class Search extends Component {
     state = {
@@ -86,28 +90,36 @@ class Search extends Component {
 
         return (
             <Fragment>
-                <div style={center}>
-                    <h2>Pokemon Search</h2>
 
+                <head>
+                    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css"/>
+                </head>
+
+                    <Animated animationIn='bounceInLeft' animationOut={"fadeOut"} isVisible={true}>
+                    <div style={center}>
+                    <h2>Pokemon Search</h2>
+                    
                     <form>
-                        <img style={pokeImg} src={this.state.results.url}></img>
+                        <img style={pokeImg}  src={this.state.results.url}></img>
                         <br/>
+
                         <input placeholder='Search...'
                         ref={input => this.search = input}
                         onChange={this.handleInputChange}
                         />
+
                         < br/>
-                        <Button variant='contained' color='primary' onClick={this.queryAPI}>Search</Button>
+                        <Button variant='contained' color='primary' onClick={this.queryAPI} type={"submit"}>Search</Button>
                         {this.state.errorMessage && <p>Pokemon not found! (Check spelling)</p>}
                     </form> 
 
                 </div>
                     <div style={container}> 
                         <div style={column}>
-                        <h2>Pokemon Type</h2>
+                            <h2>Pokemon Type</h2>
                             <ul>
                                 {this.state.types.map((types, i) => {
-                                    return <li key={i}>Type: {types.type.name}</li>
+                                    return <li style={textStyle} key={i}>Type: {types.type.name}</li>
                                 })}
                             </ul>
                         </div>
@@ -116,11 +128,12 @@ class Search extends Component {
                         <h2>Pokemon Stats</h2>
                             <ul>
                                 {this.state.statType.map((statType, i) => {
-                                    return <li key={i}>Stat: {statType.stat.name} <br/> Base Value: {statType.base_stat}</li>
+                                    return <li style={textStyle} key={i}>Stat: {statType.stat.name} <br/> Base Value: {statType.base_stat}</li>
                                 })}
                             </ul>
                         </div>
                     </div>
+                                </Animated>
             </Fragment>
         );
     };
