@@ -1,6 +1,7 @@
 {
   "name": "pokemon-search",
   "version": "0.1.0",
+  "homepage": "https://Aaronmeade92.github.io/pokemon-search/",
   "engines": {
     "node": "8.4.0"
   },
@@ -12,6 +13,7 @@
     "axios": "^0.18.0",
     "babel-jest": "^23.6.0",
     "bootstrap": "^4.3.1",
+    "gh-pages": "^2.0.1",
     "jquery": "^3.4.0",
     "react": "^16.5.2",
     "react-animated-css": "^1.0.5",
@@ -23,10 +25,13 @@
     "redux": "^4.0.0",
     "redux-thunk": "^2.3.0",
     "shuffle-array": "^1.0.1",
-    "superagent": "^4.0.0-beta.5"
+    "superagent": "^4.0.0-beta.5",
+    "yarn": "^1.15.2"
   },
   "scripts": {
     "start": "react-scripts start",
+    "predeploy": "yarn run build",
+    "deploy": "gh-pages -d build",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

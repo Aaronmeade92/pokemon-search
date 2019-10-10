@@ -4,7 +4,6 @@ import Button from '@material-ui/core/Button'
 import { Animated } from 'react-animated-css';
 
 const pokeAPI = 'https://pokeapi.co/api/v2/pokemon/';
-
 // restyle using material ui
 
 const center = {

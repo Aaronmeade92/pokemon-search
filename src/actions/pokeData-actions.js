@@ -2,7 +2,7 @@ import superagent from 'superagent';
 
 export const FETCH = 'pokemon/FETCH';
 
-const pokeAPI = 'https://pokeapi.co/api/v2/pokemon/';
+export const pokeAPI = 'https://pokeapi.co/api/v2/pokemon/';
 
 export const fetch = (name) => ({
     type: FETCH,
