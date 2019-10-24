@@ -9,13 +9,14 @@ export const fetch = (name) => ({
     payload: name,
 });
 
-export const fetchPokemon = () => {
+
+export const fetchPokeNames = () => {
     return dispatch => {
-        superagent.get(`${pokeAPI}`).then(response => {        
-                console.log(response.body.results);
-                dispatch(fetch(response.body.results));
+        superagent.get(`${pokeAPI}`).then(response => {
+            dispatch(fetch(response.body.results));
+            console.log(response.body.results)
         }).catch((err) => {
             console.log(err);
         });
     };
-};
+}

@@ -2,33 +2,32 @@ import React, { Component, Fragment } from 'react'
 import Autosuggest from 'react-autosuggest';
 import { connect } from 'react-redux';
 
-import { fetchPokemon } from '../actions/pokeData-actions.js';
+import { fetchPokeNames } from '../actions/pokeData-actions.js';
 import { pokeAPI } from '../actions/pokeData-actions.js';
-
-const getSuggestions = value => {
-    const inputValue = value.trim().toLowerCase();
-    const inputLength = inputValue.length;
-
-    return inputLength === 0 ? [] : this.state.pokeNames.filter(names =>
-        names.name.toLowerCase().slice(0, inputLength) === inputValue
-    );
-};
-
-const getSuggestionValue = suggestion => (
-    <div>
-        {suggestion.name}
-    </div>
-);
 
 class PokemonSuggestions extends Component {
 
     state = {
-        loading: true,
         value: '',
-        pokeNames: [],
-        suggestions: [this.state.pokeNames],
+        suggestions: [],
     }
 
+    getSuggestions = value => {
+            const inputValue = value.trim().toLowerCase();
+            const inputLength = inputValue.length;
+        
+            return inputLength === 0 ? [] : this.state.suggestions.filter(names =>
+                names.name.toLowerCase().slice(0, inputLength) === inputValue
+            );
+        };
+        
+        getSuggestionValue = suggestion => suggestion.name;
+        
+        renderSuggestion = suggestion => (
+            <div>
+                {suggestion.name}
+            </div>
+        );
     onChange = (e, { newValue }) => {
         this.setState({
             value: newValue
@@ -37,7 +36,7 @@ class PokemonSuggestions extends Component {
 
     onSuggestionsFetchRequested = ({ value }) => {
         this.setState({
-            suggestions: getSuggestions(value)
+            suggestions: this.getSuggestions(value)
         });
     };
 
@@ -51,8 +50,21 @@ class PokemonSuggestions extends Component {
         const url = pokeAPI;
         const response = await fetch(url);
         const data = await response.json();
-        this.setState({pokeNames: data.results, loading: false});
-    } 
+        this.setState({ pokeNames: data.results, 
+                        loading: false,
+                        suggestions: data.results,
+                    });
+                    
+        }
+                
+    getSuggestions = value => {
+        const inputValue = value.trim().toLowerCase();
+        const inputLength = inputValue.length;
+    
+        return inputLength === 0 ? [] : this.state.pokeNames.filter(names =>
+            names.name.toLowerCase().slice(0, inputLength) === inputValue
+        );
+    };
 
     render() {
 
@@ -65,22 +77,15 @@ class PokemonSuggestions extends Component {
         };
 
         return (
-            // <div>
-            //     {this.state.loading || !this.state.pokeNames ? (
-            //         <p> 'loading...' </p>
-            //     ) : (
-            //         <p> {this.state.pokeNames[0].name}</p>
-            //     )}
-            // </div>
+           
             <Fragment>
-                <script src="https://unpkg.com/react-autosuggest/dist/standalone/autosuggest.js"></script>
                  <Autosuggest
-                    suggestions={suggestions}
+                    suggestions={this.state.suggestions}
                     onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
                     onSuggestionsClearRequested={this.onSuggestionsClearRequested}
-                    getSuggestionValue={getSuggestionValue}
-                    // renderSuggestion={renderSuggestion}
-                    inputProps={inputProps}
+                    getSuggestionValue={this.getSuggestionValue}
+                    renderSuggestion={this.renderSuggestion}
+                    S={inputProps}
                 />
             </Fragment>
         )};
@@ -90,7 +95,9 @@ const mapStateToProps = state => ({
     pokemon: state.dataReducer,
 });
 
-const mapDispatchToProps = { fetchPokemon };
+const mapDispatchToProps = { 
+    fetchPokeNames
+ };
 
 export default connect(
     mapStateToProps,
